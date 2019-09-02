@@ -24,11 +24,10 @@ class InviteController {
     const data = invites.map(email => ({
       email,
       user_id: auth.user.id,
-      team_id: request.team.id,
+      team_id: request.team.id
     }))
 
     await Invite.createMany(data)
-
   }
 }
 
