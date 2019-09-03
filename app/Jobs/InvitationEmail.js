@@ -16,6 +16,7 @@ class InvitationEmail {
 
   // This is where the work is done.
   async handle({ user, team, email }) {
+
     await Mail.send(
       ['emails.invitation'],
       { team: team.name, user: user.name },
@@ -23,7 +24,7 @@ class InvitationEmail {
         message
           .to(email)
           .from('denisforigo@gmail.com', 'Denis Forigo')
-          .subject(`Convite para o time  ${team.name}`)
+          .subject(`Convite para o time ${team.name}`)
       }
     )
   }

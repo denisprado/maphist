@@ -1,10 +1,10 @@
 'use strict'
 
-const InviteHook = exports = module.exports = {}
-
 const User = use('App/Models/User')
-const Kue = use('kue')
+const Kue = use('Kue')
 const Job = use('App/Jobs/InvitationEmail')
+
+const InviteHook = (exports = module.exports = {})
 
 InviteHook.sendInvitationEmail = async (invite) => {
   const { email } = invite
