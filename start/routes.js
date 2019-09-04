@@ -35,6 +35,8 @@ Route.group(() => {
 
 Route.group(() => {
   Route.post('invites', 'InviteController.store')
+    .validator('Invite')
+    .middleware('can:invites_create')
 
   Route.resource('projects', 'ProjectController').apiOnly()
 }).middleware(['auth', 'team'])
