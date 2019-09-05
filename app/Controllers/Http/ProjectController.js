@@ -17,7 +17,7 @@ class ProjectController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request }) {
+  async index ({ request }) {
     const projects = request.team.projects().fetch()
 
     return projects
@@ -33,7 +33,7 @@ class ProjectController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request }) {
+  async store ({ request }) {
     const data = request.only(['title'])
     const project = request.team.projects().create(data)
 
@@ -49,7 +49,7 @@ class ProjectController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request }) {
+  async show ({ params, request }) {
     const project = await request.team.projects().where('id', params.id).first()
     return project
   }
@@ -62,7 +62,7 @@ class ProjectController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request }) {
+  async update ({ params, request }) {
     const data = request.only(['title'])
     const project = await request.team.projects().where('id', params.id).first()
 
@@ -81,7 +81,7 @@ class ProjectController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request }) {
+  async destroy ({ params, request }) {
     const project = await request.team.projects().where('id', params.id).first()
     await project.delete()
   }

@@ -1,6 +1,6 @@
 'use strict'
 
-const Invite = use("App/Models/Invite")
+const Invite = use('App/Models/Invite')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -18,7 +18,7 @@ class InviteController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, auth }) {
+  async store ({ request, auth }) {
     const invites = request.input('invites')
 
     const data = invites.map(email => ({
