@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -23,8 +23,6 @@ class ProjectController {
     return projects
   }
 
-
-
   /**
    * Create/save a new project.
    * POST projects
@@ -34,7 +32,7 @@ class ProjectController {
    * @param {Response} ctx.response
    */
   async store ({ request }) {
-    const data = request.only(['title'])
+    const data = request.only(['title', 'description', 'lat', 'lng'])
     const project = request.team.projects().create(data)
 
     return project
@@ -50,7 +48,10 @@ class ProjectController {
    * @param {View} ctx.view
    */
   async show ({ params, request }) {
-    const project = await request.team.projects().where('id', params.id).first()
+    const project = await request.team
+      .projects()
+      .where('id', params.id)
+      .first()
     return project
   }
 
@@ -64,7 +65,10 @@ class ProjectController {
    */
   async update ({ params, request }) {
     const data = request.only(['title'])
-    const project = await request.team.projects().where('id', params.id).first()
+    const project = await request.team
+      .projects()
+      .where('id', params.id)
+      .first()
 
     project.merge(data)
 
@@ -82,7 +86,10 @@ class ProjectController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request }) {
-    const project = await request.team.projects().where('id', params.id).first()
+    const project = await request.team
+      .projects()
+      .where('id', params.id)
+      .first()
     await project.delete()
   }
 }

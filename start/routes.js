@@ -38,4 +38,6 @@ Route.group(() => {
     'is:administrator'
   )
   Route.get('permissions', 'PermissionController.show')
+  Route.post('/files', 'FileController.store')
+  Route.get('/files/:id', 'FileController.show')
 }).middleware(['auth', 'team'])

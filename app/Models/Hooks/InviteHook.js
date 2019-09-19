@@ -17,13 +17,10 @@ InviteHook.sendInvitationEmail = async invite => {
     const user = await invite.user().fetch()
     const team = await invite.team().fetch()
 
-    const job = Kue.dispatch(
+    Kue.dispatch(
       Job.key,
       { user, team, email },
-      { priority: 'high', attempts: 3 }
+      { priority: 'normal', attempts: 3 }
     )
-
-    const result = await job.result
-    console.log(result)
   }
 }
