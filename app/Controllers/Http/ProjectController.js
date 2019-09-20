@@ -64,7 +64,7 @@ class ProjectController {
    * @param {Response} ctx.response
    */
   async update ({ params, request }) {
-    const data = request.only(['title'])
+    const data = request.only(['title', 'description', 'lat', 'lng'])
     const project = await request.team
       .projects()
       .where('id', params.id)
