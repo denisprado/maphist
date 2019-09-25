@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /*
 |--------------------------------------------------------------------------
@@ -14,30 +14,30 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route')
+const Route = use("Route");
 
-Route.post('/sessions', 'SessionController.store').validator('Session')
-Route.post('/users', 'UserController.store').validator('User')
-Route.get('/users', 'UserController.index')
-Route.post('/files', 'FileController.store')
+Route.post("/sessions", "SessionController.store").validator("Session");
+Route.post("/users", "UserController.store").validator("User");
+Route.get("/users", "UserController.index");
+Route.post("projects/:id/files", "FileController.store");
 
 Route.group(() => {
-  Route.get('roles', 'RoleController.index')
-  Route.resource('teams', 'TeamController')
+  Route.get("roles", "RoleController.index");
+  Route.resource("teams", "TeamController")
     .apiOnly()
-    .validator(new Map([[['teams.store', 'teams.update'], ['Team']]]))
-}).middleware('auth')
+    .validator(new Map([[["teams.store", "teams.update"], ["Team"]]]));
+}).middleware("auth");
 
 Route.group(() => {
-  Route.post('invites', 'InviteController.store')
-    .validator('Invite')
-    .middleware('can:invites_create')
+  Route.post("invites", "InviteController.store")
+    .validator("Invite")
+    .middleware("can:invites_create");
 
-  Route.resource('projects', 'ProjectController').apiOnly()
-  Route.get('members', 'MemberController.index')
-  Route.put('members/:id', 'MemberController.update').middleware(
-    'is:administrator'
-  )
-  Route.get('permissions', 'PermissionController.show')
-  Route.get('/files/:id', 'FileController.show')
-}).middleware(['auth', 'team'])
+  Route.resource("projects", "ProjectController").apiOnly();
+  Route.get("members", "MemberController.index");
+  Route.put("members/:id", "MemberController.update").middleware(
+    "is:administrator"
+  );
+  Route.get("permissions", "PermissionController.show");
+  Route.get("/files/:id", "FileController.show");
+}).middleware(["auth", "team"]);
