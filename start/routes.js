@@ -19,6 +19,7 @@ const Route = use('Route')
 Route.post('/sessions', 'SessionController.store').validator('Session')
 Route.post('/users', 'UserController.store').validator('User')
 Route.get('/users', 'UserController.index')
+Route.post('/files', 'FileController.store')
 
 Route.group(() => {
   Route.get('roles', 'RoleController.index')
@@ -38,6 +39,5 @@ Route.group(() => {
     'is:administrator'
   )
   Route.get('permissions', 'PermissionController.show')
-  Route.post('/files', 'FileController.store')
   Route.get('/files/:id', 'FileController.show')
 }).middleware(['auth', 'team'])

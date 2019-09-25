@@ -1,12 +1,11 @@
-'use strict'
+'use strict';
 
 class User {
-
-  get validateAll() {
+  get validateAll () {
     return true
   }
 
-  get rules() {
+  get rules () {
     return {
       name: 'required',
       email: 'required|unique:users|email',

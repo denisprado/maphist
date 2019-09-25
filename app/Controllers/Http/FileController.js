@@ -1,6 +1,7 @@
 'use strict';
 
 const File = use('App/Models/File')
+const Project = use('App/Models/Project')
 const Helpers = use('Helpers')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
@@ -25,24 +26,26 @@ class FileController {
 
       const upload = request.file('file', { size: '24mb' })
 
-      const fileName = `${Date.now()}.${upload.subtype}`
+      await upload.moveAll(Helpers.tmpPath('uploads'), file => ({
+        name: `${Date.now()}-${file.clientName}`
+      }))
 
-      await upload.move(Helpers.tmpPath('uploads'), {
-        name: fileName
-      })
-
-      if (!upload.move()) {
-        throw upload.error()
+      if (!upload.movedAll()) {
+        return upload.errors()
       }
 
-      const file = await File.create({
-        file: fileName,
-        name: upload.clientName,
-        type: upload.type,
-        subtype: upload.subtype
-      })
+      const files = await Promise.all(
+        upload.movedList().map(image =>
+          File.create({
+            file: image.fileName,
+            name: image.clientName,
+            type: image.type,
+            subtype: image.subtype
+          })
+        )
+      )
 
-      return file
+      return files
     } catch (err) {
       return response
         .status(err.status)

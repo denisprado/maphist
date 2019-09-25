@@ -32,7 +32,15 @@ class ProjectController {
    * @param {Response} ctx.response
    */
   async store ({ request }) {
-    const data = request.only(['title', 'description', 'lat', 'lng'])
+    const data = request.only([
+      'title',
+      'description',
+      'lat',
+      'lng',
+      'start_year',
+      'end_year'
+    ])
+    console.log(data)
     const project = request.team.projects().create(data)
 
     return project

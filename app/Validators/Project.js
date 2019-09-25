@@ -1,12 +1,11 @@
-'use strict'
+'use strict';
 
 class Project {
-
-  get validateAll() {
+  get validateAll () {
     return true
   }
 
-  get rules() {
+  get rules () {
     return {
       title: 'required'
     }
