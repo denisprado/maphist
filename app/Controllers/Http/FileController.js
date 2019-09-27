@@ -11,6 +11,16 @@ const Helpers = use('Helpers')
  * Resourceful controller for interacting with files
  */
 class FileController {
+  async index ({ request, params, response }) {
+    const files = await request.team
+      .projects()
+      .where('id', params.id)
+      .files()
+
+    return files
+    // return response.download(Helpers.tmpPath(`uploads/${file.file}`))
+  }
+
   /**
    * Create/save a new file.
    * POST files
