@@ -1,8 +1,7 @@
-"use strict";
+'use strict';
 
-const File = use("App/Models/File");
-const Project = use("App/Models/Project");
-const Helpers = use("Helpers");
+const File = use('App/Models/File')
+const Helpers = use('Helpers')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -20,18 +19,18 @@ class FileController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, params, response }) {
+  async store ({ request, params, response }) {
     try {
-      if (!request.file("file")) return;
+      if (!request.file('file')) return console.log('Nenhum arquivo recebido')
 
-      const upload = request.file("file", { size: "24mb" });
+      const upload = request.file('file', { size: '24mb' })
 
-      await upload.moveAll(Helpers.tmpPath("uploads"), file => ({
+      await upload.moveAll(Helpers.tmpPath('uploads'), file => ({
         name: `${Date.now()}-${file.clientName}`
-      }));
+      }))
 
       if (!upload.movedAll()) {
-        return upload.errors();
+        return upload.errors()
       }
 
       const files = await Promise.all(
@@ -44,21 +43,21 @@ class FileController {
             project_id: parseInt(params.id)
           })
         )
-      );
+      )
 
-      return files;
+      return files
     } catch (err) {
       return response
         .status(err.status)
-        .send({ error: "Erro no upload de arquivo" });
+        .send({ error: 'Erro no upload de arquivo' })
     }
   }
 
-  async show({ params, response }) {
-    const file = await File.findOrFail(params.id);
+  async show ({ params, response }) {
+    const file = await File.findOrFail(params.id)
 
-    return response.download(Helpers.tmpPath(`uploads/${file.file}`));
+    return response.download(Helpers.tmpPath(`uploads/${file.file}`))
   }
 }
 
-module.exports = FileController;
+module.exports = FileController
