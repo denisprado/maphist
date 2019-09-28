@@ -32,7 +32,6 @@ class ProjectController {
    * @param {Response} ctx.response
    */
   async store ({ request }) {
-    console.log(request)
     const data = request.only([
       'title',
       'description',
@@ -59,6 +58,7 @@ class ProjectController {
     const project = await request.team
       .projects()
       .where('id', params.id)
+      .with('files')
       .first()
     return project
   }

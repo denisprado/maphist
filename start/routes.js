@@ -20,7 +20,6 @@ Route.post('/sessions', 'SessionController.store').validator('Session')
 Route.post('/users', 'UserController.store').validator('User')
 Route.get('/users', 'UserController.index')
 Route.post('/projects/:id/files', 'FileController.store')
-Route.get('/projects/:id/files', 'FileController.index')
 
 Route.group(() => {
   Route.get('roles', 'RoleController.index')
