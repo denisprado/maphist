@@ -20,7 +20,7 @@ Route.post('/sessions', 'SessionController.store').validator('Session')
 Route.post('/users', 'UserController.store').validator('User')
 Route.get('/users', 'UserController.index')
 Route.post('/projects/:id/files', 'FileController.store')
-
+Route.get('/files/:id', 'FileController.show')
 Route.group(() => {
   Route.get('roles', 'RoleController.index')
   Route.resource('teams', 'TeamController')
@@ -39,5 +39,4 @@ Route.group(() => {
     'is:administrator'
   )
   Route.get('permissions', 'PermissionController.show')
-  Route.get('/files/:id', 'FileController.show')
 }).middleware(['auth', 'team'])

@@ -18,7 +18,10 @@ class ProjectController {
    * @param {View} ctx.view
    */
   async index ({ request }) {
-    const projects = request.team.projects().fetch()
+    const projects = await request.team
+      .projects()
+      .with('files')
+      .fetch()
 
     return projects
   }

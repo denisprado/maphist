@@ -25,7 +25,7 @@ class FileController {
       if (!request.file("file")) return console.log("Nenhum arquivo recebido");
 
       const upload = request.file("file", { size: "24mb" });
-
+      console.log(upload);
       await upload.moveAll(Helpers.tmpPath("uploads"), file => ({
         name: `${Date.now()}-${file.clientName}`
       }));
