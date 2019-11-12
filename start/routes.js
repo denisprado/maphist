@@ -21,6 +21,8 @@ Route.post('/users', 'UserController.store').validator('User')
 Route.get('/users', 'UserController.index')
 Route.post('/projects/:id/files', 'FileController.store')
 Route.get('/files/:id', 'FileController.show')
+Route.resource('categories', 'CategoryController').apiOnly()
+
 Route.group(() => {
   Route.get('roles', 'RoleController.index')
   Route.resource('teams', 'TeamController')

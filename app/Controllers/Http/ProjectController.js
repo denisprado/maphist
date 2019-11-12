@@ -1,5 +1,4 @@
 'use strict';
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -21,6 +20,7 @@ class ProjectController {
     const projects = await request.team
       .projects()
       .with('files')
+      .with('categories')
       .fetch()
 
     return projects
@@ -43,7 +43,14 @@ class ProjectController {
       'start_year',
       'end_year'
     ])
+
+    const categoriesQuery = request.only(['category_id'])
+
+    const categories = categoriesQuery.category_id
+
     const project = request.team.projects().create(data)
+
+    await project.categories().attach(categories)
 
     return project
   }
@@ -62,6 +69,7 @@ class ProjectController {
       .projects()
       .where('id', params.id)
       .with('files')
+      .with('categories')
       .first()
     return project
   }
@@ -75,7 +83,15 @@ class ProjectController {
    * @param {Response} ctx.response
    */
   async update ({ params, request }) {
-    const data = request.only(['title', 'description', 'lat', 'lng'])
+    const data = request.only([
+      'title',
+      'description',
+      'lat',
+      'lng',
+      'start_year',
+      'end_year',
+      'category_id'
+    ])
     const project = await request.team
       .projects()
       .where('id', params.id)
