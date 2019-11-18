@@ -44,13 +44,13 @@ class ProjectController {
       'end_year'
     ])
 
-    const categoriesQuery = request.only(['category_id'])
-
-    const categories = categoriesQuery.category_id
-
     const project = request.team.projects().create(data)
 
-    await project.categories().attach(categories)
+    const categoriesQuery = request.only(['category_id'])
+    if (categoriesQuery) {
+      const categories = categoriesQuery.category_id
+      await project.categories().attach(categories)
+    }
 
     return project
   }
